@@ -20,7 +20,7 @@ For e.g.,
 This will run simulation on 557.xz_r benchmark with a CNN3 model having a batchsize of 4 on a single GPU. Here, The warmup length is 5. 
 
   
-  ## Regenerating the results 
+## Regenerating the results 
   The scripts required to regenerate the results in the paper can be found in the `scripts/` folder. 
   
   1. To generate state-of-the-art results, the script state_of_the_art.py can be used. The script generates the results for Figure 10 in the paper. It will report average throughput of each benchmark for the proposed system. 
@@ -34,3 +34,11 @@ This will run simulation on 557.xz_r benchmark with a CNN3 model having a batchs
   3. For the parallel simulation error in the Figure 18, the script scripts/error.py can be used. The script reports the predicted latency for the program without any error correction, with warmup and with both warmup and correction for all the benchmarks. To get the actual error comparison with gem5, scripts/result_analysis.py can be used. The scripts contains the results from gem5 and reports the average error.
 
 `python3 scripts/error.py`
+
+## System Requirement
+
+A100 GPU or V100 GPU
+
+## Benchmarks
+
+21 datasets from SPEC 2017 benchmarks are used. The benchmarks can be downloaded from [here](https://www.spec.org/cpu2017/). 
