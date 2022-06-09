@@ -16,7 +16,7 @@ The repo includes 557.xz_r.qq100m.tr.bin and 557.xz_r.qq100m.tra.bin which consi
 <Warmup instructions> specifies how many instructions to simulate for warmup from each partition. 
 
 For e.g., 
-./build/trt_n_simulator 557.xz_r.qq100m.tr.bin 557.xz_r.qq100m.tra.bin ~/new_tensorrt_models/CNN3_32768_half.engine 1000 4 1 5 
+`./build/trt_n_simulator datasets/557.xz_r.qq100m.tr.bin datasets/557.xz_r.qq100m.tra.bin ~/new_tensorrt_models/CNN3_32768_half.engine 1000 4 1 5` 
 This will run simulation on 557.xz_r benchmark with a CNN3 model having a batchsize of 4 on a single GPU. Here, The warmup length is 5. 
 
   
@@ -35,9 +35,8 @@ This will run simulation on 557.xz_r benchmark with a CNN3 model having a batchs
 
 `python3 scripts/error.py`
 
-## System Requirement
-
-A100 GPU or V100 GPU
+## Tested Hardware
+A100 GPU and V100 GPU
 
 ## Benchmarks
 
