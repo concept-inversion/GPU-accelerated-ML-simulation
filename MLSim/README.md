@@ -1,19 +1,14 @@
-# simnet
-This folder contains the optimized version of SimNet. To run the simulation, we first need trace files from the benchmarks. Directions to generate the trace file can be found at the simnet root folder. After we have the trace, we need to generate the TensorRT inference engine for the trained models. trt_cpp/ folder contains the script required for generating the TensorRT model. 
+## Building the simulator
+This repo includes the docker image for the simulator. To get the executables, build the docker image with command: 
 
-## Generating the TensorRT engine
-TensorRT models can be generated using the `convert_script.py` script. Basically, the script converts all of the trained libtorch model from SimNet (present in folder final_models/) to ONNX model and to TensorRT models (new_tensorrt_models/). `code_static.cpp` is the actual scripts which converts individual libtorch model to TensorRT model. Before running `convert_script.py`, execute `run_code.sh` to build executables for `code_static`. `models.py` describes the model used by SimNet. The configuration of TensorRT inference engine (half precision, 2:4 pruning) can be changed from the same `code_static.cpp` file. Note, the batchsize of TensorRT model should match the batchsize of simulator.   
-
-## Compiling the simulator
-The simulator can be build by running `make` in the sim_qq_GPU which builds both CPU and GPU version of the simulator in the build folder. `trt_n_simulator` is the executable which includes all the optimizations and used for experiments. 
-
+`docker build -t MLSim`
+ 
+The executable for the simulator can be found inside the build folder. 
 
 ## Running the simulator
 The arguments to run the simulator are listed below: 
 
-`
-./build/trt_n_simulator <trace> <aux_trace> <inference_engine> <Total instructions to simulation from trace> <Batchsize per GPU> <number of GPUs> <Warmup instruction>
-`
+`./build/trt_n_simulator <trace> <aux_trace> <inference_engine> <Total instructions to simulation from trace> <Batchsize per GPU> <number of GPUs> <Warmup instruction>`
 
 Here, 
 both <trace> and <aux trace> represent the benchmarks pre-processed data in binary format. 
@@ -23,3 +18,19 @@ The repo includes 557.xz_r.qq100m.tr.bin and 557.xz_r.qq100m.tra.bin which consi
 For e.g., 
 ./build/trt_n_simulator 557.xz_r.qq100m.tr.bin 557.xz_r.qq100m.tra.bin ~/new_tensorrt_models/CNN3_32768_half.engine 1000 4 1 5 
 This will run simulation on 557.xz_r benchmark with a CNN3 model having a batchsize of 4 on a single GPU. Here, The warmup length is 5. 
+
+  
+  ## Regenerating the results 
+  The scripts required to regenerate the results in the paper can be found in the `scripts/` folder. 
+  
+  1. To generate state-of-the-art results, the script state_of_the_art.py can be used. The script generates the results for Figure 10 in the paper. It will report average throughput of each benchmark for the proposed system. 
+  
+  `python3 scripts/state_of_the_art.py`
+  
+  2. For the scalability study reported in the Figure 17, the script at scalability.py can be used. The script generates the throughput for each benchmark with various number of GPUs used to generate the figure. The number of GPUs to be used can be modified in the script to desired number. 
+  
+  `python3 scripts/scalability.py`
+  
+  3. For the parallel simulation error in the Figure 18, the script scripts/error.py can be used. The script reports the predicted latency for the program without any error correction, with warmup and with both warmup and correction for all the benchmarks. To get the actual error comparison with gem5, scripts/result_analysis.py can be used. The scripts contains the results from gem5 and reports the average error.
+
+`python3 scripts/error.py`
