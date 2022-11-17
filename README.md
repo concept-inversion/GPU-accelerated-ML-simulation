@@ -12,12 +12,9 @@ The arguments to run the simulator are listed below:
 
 Here, 
 both <trace> and <aux trace> represent the benchmarks pre-processed data in binary format. 
-The repo includes 557.xz_r.qq100m.tr.bin and 557.xz_r.qq100m.tra.bin which consists of 1000 instructions as an example. 
+ 
 <Warmup instructions> specifies how many instructions to simulate for warmup from each partition. 
 
-For e.g., 
-`./build/trt_n_simulator datasets/557.xz_r.qq100m.tr.bin datasets/557.xz_r.qq100m.tra.bin ~/new_tensorrt_models/CNN3_32768_half.engine 1000 4 1 5` 
-This will run simulation on 557.xz_r benchmark with a CNN3 model having a batchsize of 4 on a single GPU. Here, The warmup length is 5. 
 
   
 ## Regenerating the results 
@@ -40,4 +37,4 @@ A100 GPU and V100 GPU
 
 ## Benchmarks
 
-21 datasets from SPEC 2017 benchmarks are used. The benchmarks can be downloaded from [here](https://www.spec.org/cpu2017/). 
+21 datasets from SPEC 2017 benchmarks are used. The benchmarks can be found [here](https://www.spec.org/cpu2017/). 
